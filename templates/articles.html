@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Техно Холст{% endblock %}
+
+{% block content %}
+
+<main class="tech-main">
+
+  <div class="tech-container">
+
+    <h1>Каталог статей</h1>
+
+    <div class="tech-articles-list">
+
+      <a href="{{ url_for('article') }}" class="tech-article-row">
+
+        <!-- Левая часть (визуал) -->
+        <article class="tech-article-cardlarge">
+          <div class="tech-article-info">
+            <h2>Как подобрать<br>планшет?</h2>
+            <p>Статья, которая поможет<br>определиться с выбором</p>
+            <span class="tech-btn-prim">Читать</span>
+          </div>
+        </article>
+
+        <!-- Правая часть (описание) -->
+        <div class="tech-article-description">
+          <p><b>
+            Хотите начать рисовать, но не знаете,<br>как подобрать планшет?<br></b></p>
+            <p class="article-text-mini">В этой статье мы расскажем о принципах цифрового искусства,
+            объясним, на что обратить внимание при выборе устройства, и поможем
+            подобрать планшет, который подойдет именно вам!
+          </p>
+        </div>
+
+      </a>
+
+    </div>
+
+  </div>
+</main>
+{% endblock %}>

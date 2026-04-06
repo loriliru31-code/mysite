@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+
+<main class="auth-page">
+
+<div class="auth-card">
+
+<h2>Регистрация клиента</h2>
+
+{% if error %}
+<div class="flash error">{{ error }}</div>
+{% endif %}
+
+<form method="POST" action="{{ url_for('auth.register') }}" class="auth-form">
+
+    <input type="text" name="full_name" placeholder="ФИО" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Пароль" required>
+
+    <button type="submit" class="btn-auth">Зарегистрироваться</button>
+
+</form>
+
+<p class="auth-link">
+Уже есть аккаунт?
+<a href="{{ url_for('auth.login') }}">Войти</a>
+</p>
+
+</div>
+
+</main>
+{% endblock %}

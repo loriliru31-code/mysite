@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+
+<main class="ucart-container">
+
+<h2 class="ucart-title">Корзина</h2>
+
+<div class="ucart-box">
+
+<div class="ucart-items" id="cartItems">
+
+{% if cart_items %}
+{% for item in cart_items %}
+<div class="ucart-item" data-id="{{ item.id }}">
+    <div class="ucart-img">
+        <img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.name }}">
+    </div>
+    <div class="ucart-name">{{ item.name }}</div>
+    <div class="ucart-price">{{ item.price }} ₽</div>
+    <div class="ucart-quantity">Количество: {{ item.quantity }}</div>
+    <button class="ucart-remove-btn" data-id="{{ item.id }}">Удалить</button>
+</div>
+{% endfor %}
+{% else %}
+<p class="ucart-empty">Ваша корзина пуста.</p>
+{% endif %}
+
+</div>
+
+<div class="ucart-total">
+<span>Сумма заказа:</span>
+<span id="totalPrice">{{ total_price }} ₽</span>
+</div>
+
+{% if cart_items %}
+<div class="ucart-order-container">
+<a href="{{ url_for('orders.checkout') }}" class="ucart-order-btn">
+    Оформить заказ
+</a>
+</div>
+{% endif %}
+
+</div>
+</main>
+
+<script>
+document.querySelectorAll(".ucart-remove-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const productId = btn.dataset.id;
+
+        fetch(`/remove_from_cart/${productId}`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Удаляем элемент из DOM
+                const itemEl = document.querySelector(`.ucart-item[data-id='${productId}']`);
+                if (itemEl) itemEl.remove();
+
+                // Обновляем общую сумму
+                const totalEl = document.getElementById("totalPrice");
+                if (totalEl) totalEl.textContent = data.total_price ? data.total_price + " ₽" : "0 ₽";
+
+                // Если корзина пуста, показываем сообщение
+                if (document.querySelectorAll(".ucart-item").length === 0) {
+                    document.getElementById("cartItems").innerHTML = '<p class="ucart-empty">Ваша корзина пуста.</p>';
+                    document.getElementById("totalPrice").textContent = "0 ₽";
+                }
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

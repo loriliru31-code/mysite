@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Техно Холст{% endblock %}
+
+{% block content %}
+
+<section class="hero-banner">
+  <div class="hero-content">
+    <h1>Создавай<br>без границ</h1>
+    <p>Оборудование для художников</p>
+    <a href="{{ url_for('products.catalog') }}" class="btn-primary">Каталог товаров</a>
+  </div>
+</section>
+
+<main class="main-content">
+
+  <!-- Левый сайдбар -->
+  <aside class="sidebar">
+    <section class="categories">
+      <h2>Категории</h2>
+      <ul>
+        <li><a href="{{ url_for('products.catalog', category='3') }}">Планшеты →</a></li>
+        <li><a href="{{ url_for('products.catalog', category='2') }}">Мониторы →</a></li>
+        <li><a href="{{ url_for('products.catalog', category='1') }}">Стилусы →</a></li>
+        <li><a href="{{ url_for('products.catalog', category='4') }}">Другое →</a></li>
+        <li><a href="{{ url_for('products.catalog') }}">Каталог →</a></li>
+      </ul>
+    </section>
+
+    <section class="blog-links">
+      <h2>Блоги<br>и статьи</h2>
+      <ul>
+        <li><a href="{{ url_for('blog') }}">Блог →</a></li>
+        <li><a href="{{ url_for('articles') }}">Статьи →</a></li>
+      </ul>
+    </section>
+  </aside>
+
+  <!-- Правая колонка: товары + статьи -->
+  <div class="right-content">
+
+    <!-- Популярные товары -->
+    <section class="products">
+      <h2>Популярные товары</h2>
+      <div class="products-grid">
+       {% for product in products %}
+
+<article class="product-card">
+
+<a href="{{ url_for('products.product_page', sku=product.sku) }}" class="product-link">
+
+<div class="product-img">
+    {% if product.image %}
+        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+    {% else %}
+        <div class="placeholder-img"></div>
+    {% endif %}
+</div>
+
+<p class="product-title">{{ product.name }}</p>
+
+<p class="product-price">{{ product.price }} ₽</p>
+
+</a>
+
+<a href="#" class="btn-cart" data-id="{{ product.id }}">
+    В корзину
+</a>
+
+
+</article>
+
+{% endfor %}
+      </div>
+    </section>
+
+    <!-- Статьи -->
+    <div class="articles">
+      <a href="{{ url_for('articles') }}" class="article-link">
+    <article class="article-cardlarge">
+      <div class="article-info">
+        <h2>Как подобрать<br>планшет?</h2>
+        <p>Статья, которая поможет<br>определиться с выбором</p>
+        <span class="btn-prim">Читать</span>
+      </div>
+    </article>
+  </a>
+
+  <!-- МАЛЕНЬКАЯ КАРТОЧКА → blog -->
+  <a href="{{ url_for('blog') }}" class="article-link">
+    <article class="article-card">
+      <div class="article-image">
+        <img src="{{ url_for('static', filename='img/article2.png') }}" alt="">
+      </div>
+      <div class="article-title">
+        <h2>Блог</h2>
+      </div>
+    </article>
+  </a>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

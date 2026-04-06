@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Мои заказы{% endblock %}
+
+{% block content %}
+
+{% if orders %}
+<div class="orders-container">
+    <h1>Мои заказы</h1>
+    {% for order in orders %}
+    <div class="order-card">
+        <div class="order-header">
+            <span>Заказ №{{ order.id }}</span>
+            <span class="order-date">{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</span>
+        </div>
+        <div class="order-body">
+            <div>Сумма: <b>{{ order.total_price }} ₽</b></div>
+            <div>Статус: <b>{{ order.status }}</b></div>
+            <a class="btn" href="{{ url_for('orders.order_items', order_id=order.id) }}">Посмотреть товары</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>У вас пока нет заказов.</p>
+{% endif %}
+{% endblock %}

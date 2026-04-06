@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Техно Холст{% endblock %}</title>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+</head>
+<body>
+
+<header class="header">
+    <a href="{{ url_for('index') }}">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Логотип Техно Холст">
+            <span>ТехноХолст</span>
+        </div>
+    </a>
+    <nav class="navbar">
+        <a href="{{ url_for('products.catalog') }}">Каталог</a>
+        <a href="{{ url_for('products.catalog', category=3) }}">Планшеты</a>
+        <a href="{{ url_for('products.catalog', category=2) }}">Мониторы</a>
+        <a href="{{ url_for('products.catalog', category=1) }}">Стилусы</a>
+        <a href="{{ url_for('products.catalog', category=4) }}">Другое</a>
+        <a href="{{ url_for('blog') }}">Блог</a>
+</nav>
+    <div class="header-icons">
+        <a href="{{ url_for('cart.view_cart') }}" class="icon-link">
+            <img src="{{ url_for('static', filename='img/cart.png') }}" alt="Корзина">
+            <span id="cart-count">{{ session.get('cart', [])|length }}</span>
+        </a>
+        <a href="{{ url_for('auth.profile') }}" class="icon-link">
+            <img src="{{ url_for('static', filename='img/profile.png') }}" alt="Профиль">
+        </a>
+    </div>
+</header>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+  {% for category, message in messages %}
+    <div class="flash {{ category }}">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
+<main class="main-flex">
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+<p>© 2026 Техно Холст. Все права защищены.</p>
+</footer>
+
+</body>
+</html>

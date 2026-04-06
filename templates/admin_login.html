@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Админ Вход{% endblock %}
+
+{% block content %}
+<main class="auth-page">
+
+<div class="auth-card">
+
+<h2>Вход для администратора</h2>
+
+{% if error %}
+<div class="flash error">{{ error }}</div>
+{% endif %}
+
+<form method="POST" action="{{ url_for('auth.admin_login') }}" class="auth-form">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Пароль" required>
+
+    <button type="submit" class="btn-auth">Войти</button>
+</form>
+
+<p class="auth-link">
+<a href="{{ url_for('auth.login') }}">Вход как пользователь</a>
+</p>
+
+</div>
+
+</main>
+{% endblock %}

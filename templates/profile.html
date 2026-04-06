@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль - Техно Холст{% endblock %}
+
+{% block content %}
+<main class="uprofile-main">
+
+<section class="uprofile-section">
+<h1>Профиль</h1>
+
+<div class="uprofile-card">
+
+    <div class="uprofile-photo">
+        <img src="{{ url_for('static', filename=user.avatar) }}" alt="{{ user.username }}">
+    </div>
+
+    <div class="uprofile-info">
+
+        <div class="uprofile-username">
+            {{ user.username }}
+        </div>
+        
+        <div class="uprofile-fullname">
+            {{ user.email }}
+        </div>
+
+    </div>
+
+    <div class="uprofile-buttons">
+
+        <a href="{{ url_for('orders.orders_page') }}" class="uprofile-btn">
+            Заказы
+        </a>
+
+        <a href="{{ url_for('cart.view_cart') }}" class="uprofile-btn">
+            Корзина
+        </a>
+
+        <a href="{{ url_for('auth.logout') }}" class="uprofile-btn">
+            Выйти
+        </a>
+
+    </div>
+
+</div>
+</section>
+
+<section class="uprofile-bottom">
+    <div class="uprofile-message">
+        Впереди еще много открытий
+    </div>
+
+    <a href="{{ url_for('index') }}" class="uprofile-return">
+        Вернуться на главную
+    </a>
+</section>
+
+</main>
+{% endblock %}

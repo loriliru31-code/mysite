@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Техно Холст{% endblock %}
+
+{% block content %}
+<main class="pitem-page">
+
+<h1 class="pitem-title">{{ product.name }}</h1>
+
+<div class="pitem-container">
+
+<!-- изображения товара -->
+
+<div class="pitem-gallery">
+
+<div class="pitem-main-img">
+        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+        <div class="placeholder-img"></div>
+</div>
+
+</div>
+
+<!-- информация -->
+
+<div class="pitem-info">
+
+<p class="pitem-price">{{ product.price }} ₽</p>
+
+<p class="pitem-desc">
+{{ product.description }}
+</p>
+
+<div class="pitem-actions">
+
+<a href="#" class="btn-cart" data-id="{{ product.id }}">
+    В корзину
+</a>
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- характеристики -->
+
+<div class="pitem-specs">
+
+<h2>Характеристики</h2>
+
+<table>
+
+{% for spec in product.specs %}
+
+<tr>
+<td>{{ spec.name }}</td>
+<td>{{ spec.value }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</main>
+{% endblock %}

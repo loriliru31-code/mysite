@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Каталог - Техно Холст{% endblock %}
+
+{% block content %}
+<main class="container">
+
+<section class="filter">
+    <div class="filter-header">Фильтр</div>
+    <div class="filter-box">
+        <select class="device-select" id="categorySelect">
+            <option value="">Выберите тип устройства</option>
+            {% for c in categories %}
+            <option value="{{ c[0] }}">{{ c[1] }}</option>
+            {% endfor %}
+        </select>
+
+        <div class="filter-options" id="filterOptions"></div>
+        <button class="apply-btn">Применить</button>
+    </div>
+</section>
+
+<section class="catalog" id="catalog">
+   <div class="catalog-products-grid">
+ {% for product in products %}
+
+<article class="product-card">
+
+<a href="{{ url_for('products.product_page', sku=product.sku) }}" class="product-link">
+
+<div class="product-img">
+    {% if product.image %}
+        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+    {% else %}
+        <div class="placeholder-img"></div>
+    {% endif %}
+</div>
+
+<p class="product-title">{{ product.name }}</p>
+
+<p class="product-price">{{ product.price }} ₽</p>
+
+</a>
+
+<a href="#" class="btn-cart" data-id="{{ product.id }}">
+    В корзину
+</a>
+
+</article>
+
+{% endfor %}
+</div>
+</section>
+
+</main>
+<script src="{{ url_for('static', filename='js/catalog.js') }}"></script>
+{% endblock %}
